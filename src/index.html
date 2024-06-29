@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="./icon.png" />
+    <title>Todo List</title>
+  </head>
+  <body>
+    <div id="container">
+      <div id="header">
+        <img src="./menu.svg" alt="Menu Icon" />
+        <h1>Todo</h1>
+      </div>
+      <div id="sidebar">
+        <ul id="default-project-list"></ul>
+        <div>
+          <h3>Projects</h3>
+          <button id="add-project-button">+</button>
+        </div>
+        <ul id="projects"></ul>
+      </div>
+      <div id="content"></div>
+    </div>
+    <dialog>
+      <form method="dialog" id="add-todo-form">
+        <input
+          type="text"
+          name="title"
+          placeholder="Name of todo..."
+          required
+        />
+        <textarea
+          name="description"
+          placeholder="Description of the todo..."
+        ></textarea>
+        <div>
+          <label for="date">Date</label>
+          <input type="date" name="date" id="date" />
+        </div>
+        <div>
+          <label for="priority">Priority</label>
+          <select name="priority" id="priority-select">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+        <div>
+          <label for="status">Status</label>
+          <select name="status" id="status-select">
+            <option value="Not Started">Not Started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Complete">Complete</option>
+          </select>
+        </div>
+        <div>
+          <label for="project">Project</label>
+          <select name="project" id="project-select">
+            <option value=""></option>
+          </select>
+        </div>
+        <input type="submit" value="Add" />
+      </form>
+    </dialog>
+    <dialog>
+      <form method="dialog" id="add-project-form">
+        <label for="projectName">Name</label>
+        <input
+          type="text"
+          id="projectName"
+          name="name"
+          required
+          placeholder="Name of project."
+        />
+        <input type="submit" value="Add" />
+      </form>
+    </dialog>
+    <dialog>
+      <form method="dialog" id="edit-todo-form">
+        <input type="text" name="title" required />
+        <!-- <input type="text" name="description" /> -->
+        <textarea name="description"></textarea>
+        <div>
+          <label for="date">Date</label>
+          <input type="date" name="date" id="edit-date" />
+        </div>
+        <div>
+          <label for="priority">Priority</label>
+          <select name="priority" id="priority-select">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+        <div>
+          <label for="status">Status</label>
+          <select name="status" id="status-select">
+            <option value="Not Started">Not Started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Complete">Complete</option>
+          </select>
+        </div>
+        <div>
+          <label for="project">Project</label>
+          <select name="project" id="project-select">
+            <option value=""></option>
+          </select>
+        </div>
+        <div>
+          <input type="button" value="Delete" id="delete-todo-button" />
+          <input type="submit" value="Save" />
+        </div>
+      </form>
+    </dialog>
+    <dialog>
+      <form method="dialog" id="edit-project-form">
+        <label for="projectName">Name</label>
+        <input
+          type="text"
+          id="projectName"
+          name="name"
+          required
+          placeholder="Name of project."
+        />
+        <div>
+          <label for="gradient">Color One</label>
+          <input type="color" />
+        </div>
+        <div>
+          <label for="gradient">Color Two</label>
+          <input type="color" />
+        </div>
+        <div>
+          <input type="button" value="Delete" id="delete-project-button" />
+          <input type="submit" value="Save" />
+        </div>
+      </form>
+    </dialog>
+    <button id="add-button">+</button>
+  </body>
+</html>
