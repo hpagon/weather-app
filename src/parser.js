@@ -21,7 +21,7 @@ class Parser {
       locationJson.timezone
     ).toLocaleString(DateTime.TIME_SIMPLE);
     return {
-      localTime: currentTime.toISO(),
+      localTime: currentTime,
       localHour: currentTime.hour,
       time: weatherJson.current.time,
       indexHour: givenHour,
@@ -61,7 +61,6 @@ class Parser {
     let localDate = DateTime.fromISO(date, { zone: "UTC" }).setZone(
       localTimeZone
     );
-    console.log(localDate);
     return localDate;
   }
 

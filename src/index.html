@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>Weather App</title>
   </head>
   <body>
@@ -14,10 +15,34 @@
         </form>
       </div>
       <div id="main">
-        <div id="main-card">Main Card</div>
-        <div id="hourly-card">Hourly Weather</div>
-        <div id="daily-card">Daily Weather</div>
-        <div id="detail-card">Today's Details</div>
+        <div id="main-card">
+          <div class="card">
+            <h1 id="current-temperature">104 F</h1>
+            <p id="feels-like">107 F</p>
+            <p id="condition">Overcast</p>
+            <p>Last Updated <span>2:13 PM</span></p>
+          </div>
+        </div>
+        <div id="hourly-card">
+          <h2>Hourly Weather</h2>
+          <div class="card"></div>
+        </div>
+        <div id="daily-card">
+          <h2>Daily Weather</h2>
+          <div class="card"></div>
+        </div>
+        <div id="detail-card">
+          <h2>Today's Details</h2>
+          <div class="card">
+            <div class="detail">Wind</div>
+            <div class="detail">Humidity</div>
+            <div class="detail">Dew Point</div>
+            <div class="detail">Pressure</div>
+            <div class="detail">UV Index</div>
+            <div class="detail">Sunrise</div>
+            <div class="detail">Sunset</div>
+          </div>
+        </div>
       </div>
     </div>
   </body>
