@@ -4,7 +4,7 @@ const { type } = require("os");
 
 module.exports = {
   mode: "development",
-  entry: "./src/index.js",
+  entry: "./src/js/index.js",
   devServer: {
     static: "./dist",
     watchFiles: ["src/index.html", "src/style.css"],

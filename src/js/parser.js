@@ -125,6 +125,12 @@ class Parser {
         return "Thunderstorm with heavy hail";
     }
   }
+  //converts an hour in military time to the standard format
+  convertMilitaryTimeHour(hour) {
+    const suffix = hour >= 12 ? " pm" : " am";
+    const adjustedHour = hour === 12 || hour === 0 ? 12 : hour % 12;
+    return adjustedHour + suffix;
+  }
 }
 
 const parser = new Parser();

@@ -1,3 +1,5 @@
+import { parser } from "./parser";
+
 class DomEditor {
   constructor() {}
 
@@ -20,9 +22,11 @@ class DomEditor {
       const condition = document.createElement("img");
       const chanceOfRain = document.createElement("p");
       //add content
-      time.textContent = "Time: " + (data.indexHour + i);
+      time.textContent = parser.convertMilitaryTimeHour(
+        (data.localHour + i) % 24
+      );
       temperature.textContent =
-        hourlyData.temperatures[data.indexHour + i] + "°C";
+        hourlyData.temperatures[data.indexHour + i] + "°F";
       condition.setAttribute(
         "alt",
         hourlyData.weatherCodes[data.indexHour + i]
@@ -46,7 +50,7 @@ class DomEditor {
       const condition = document.createElement("img");
       const chanceOfRain = document.createElement("p");
       //add content
-      day.textContent = days[(data.localTime.weekday + i) % 7];
+      day.textContent = days[(data.localTime.weekday + i - 1) % 7];
       maxTemp.textContent = dailyData.maxTemperatures[i] + "°C";
       minTemp.textContent = dailyData.minTemperatures[i] + "°C";
       condition.setAttribute("alt", dailyData.weatherCodes[i]);
