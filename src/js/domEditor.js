@@ -13,7 +13,7 @@ class DomEditor {
     console.log("Update Main Card Method received data successfully");
   }
   updateHourlyCard(data, hourlyData) {
-    const hourlyCard = document.querySelector("#hourly-card");
+    const hourlyCard = document.querySelector("#hourly-card .card");
     //insert data for up to 48 hours
     for (let i = 0; i < 48; i++) {
       const card = document.createElement("div");
