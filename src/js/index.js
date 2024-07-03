@@ -5,7 +5,9 @@ import { domEditor } from "./domEditor.js";
 import "../style.css";
 
 class App {
-  constructor() {}
+  constructor() {
+    domEditor.loadContent();
+  }
   async updateWeather(cityName) {
     let locationJson = await apiHandler.fetchLocation(cityName);
     locationJson = locationJson.results[0];
