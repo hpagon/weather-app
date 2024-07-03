@@ -1,4 +1,5 @@
 import { parser } from "./parser";
+import { weatherCondition } from "./weatherCondition";
 
 class DomEditor {
   constructor() {}
@@ -14,7 +15,7 @@ class DomEditor {
     this.updateDetailsCard(data.details);
   }
   createHourlyCard() {
-    const hourlyCard = document.querySelector("#hourly-card .card");
+    const hourlyCard = document.querySelector("#hourly-card .card-container");
     //insert data slots for up to 48 hours
     for (let i = 0; i < 48; i++) {
       const card = document.createElement("div");
@@ -22,13 +23,15 @@ class DomEditor {
       const temperature = document.createElement("p");
       const condition = document.createElement("img");
       const chanceOfRain = document.createElement("p");
+      //add classes
+      card.classList.add("card");
       //append elements
       card.append(time, temperature, condition, chanceOfRain);
       hourlyCard.appendChild(card);
     }
   }
   createDailyCard() {
-    const dailyCard = document.querySelector("#daily-card .card");
+    const dailyCard = document.querySelector("#daily-card .card-container");
     //insert data for up to 48 hours
     for (let i = 0; i < 7; i++) {
       const card = document.createElement("div");
@@ -37,6 +40,8 @@ class DomEditor {
       const minTemp = document.createElement("p");
       const condition = document.createElement("img");
       const chanceOfRain = document.createElement("p");
+      //add classes
+      card.classList.add("card");
       //append elements
       card.append(day, maxTemp, minTemp, condition, chanceOfRain);
       dailyCard.appendChild(card);
@@ -47,7 +52,7 @@ class DomEditor {
   }
 
   updateHourlyCard(data, hourlyData) {
-    const hourlyCard = document.querySelector("#hourly-card .card");
+    const hourlyCard = document.querySelector("#hourly-card .card-container");
     //insert data for up to 48 hours
     for (let i = 0; i < 48; i++) {
       const card = hourlyCard.children[i];
@@ -65,12 +70,16 @@ class DomEditor {
         "alt",
         hourlyData.weatherCodes[data.indexHour + i]
       );
+      condition.src = weatherCondition.weatherCodeToImage(
+        hourlyData.weatherCodes[data.indexHour + i],
+        hourlyData.isDay[data.indexHour + i]
+      );
       chanceOfRain.textContent =
         hourlyData.rainChances[data.indexHour + i] + "%";
     }
   }
   updateDailyCard(data, dailyData) {
-    const dailyCard = document.querySelector("#daily-card .card");
+    const dailyCard = document.querySelector("#daily-card .card-container");
     const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     //insert data for up to 48 hours
     for (let i = 0; i < 7; i++) {
@@ -85,6 +94,9 @@ class DomEditor {
       maxTemp.textContent = dailyData.maxTemperatures[i] + "°C";
       minTemp.textContent = dailyData.minTemperatures[i] + "°C";
       condition.setAttribute("alt", dailyData.weatherCodes[i]);
+      condition.src = weatherCondition.weatherCodeToImage(
+        dailyData.weatherCodes[i]
+      );
       chanceOfRain.textContent = dailyData.rainChances[i] + "%";
     }
   }
