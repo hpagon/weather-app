@@ -13,6 +13,10 @@ class Parser {
       weatherJson.current.time,
       "UTC"
     ).hour;
+    let lastUpdated = this.convertToLocalTime(
+      weatherJson.current.time,
+      locationJson.timezone
+    ).toFormat("t ZZZZ");
     let sunrise = this.convertToLocalTime(
       weatherJson.daily.sunrise[0],
       locationJson.timezone
@@ -35,6 +39,16 @@ class Parser {
         weatherCode: weatherCondition.weatherCodeDecrypt(
           weatherJson.current.weather_code
         ),
+        lastUpdated,
+        details: {
+          wind: weatherJson.current.wind_speed_10m,
+          humidity: weatherJson.current.relative_humidity_2m,
+          dewPoint: weatherJson.current.dew_point_2m,
+          pressure: weatherJson.current.surface_pressure,
+          uvIndex: weatherJson.daily.uv_index_max[0],
+          sunrise,
+          sunset,
+        },
       },
       hourly: {
         temperatures: weatherJson.hourly.temperature_2m,
@@ -47,15 +61,6 @@ class Parser {
         minTemperatures: weatherJson.daily.temperature_2m_min,
         weatherCodes: weatherJson.daily.weather_code,
         rainChances: weatherJson.daily.precipitation_probability_mean,
-      },
-      details: {
-        wind: weatherJson.current.wind_speed_10m,
-        humidity: weatherJson.current.relative_humidity_2m,
-        dewPoint: weatherJson.current.dew_point_2m,
-        pressure: weatherJson.current.surface_pressure,
-        uvIndex: weatherJson.daily.uv_index_max[0],
-        sunrise,
-        sunset,
       },
     };
   }

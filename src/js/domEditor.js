@@ -9,10 +9,9 @@ class DomEditor {
   }
 
   updateWeather(data) {
-    this.updateMainCard(data.main);
+    this.updateMainCard(data, data.main);
     this.updateHourlyCard(data, data.hourly);
     this.updateDailyCard(data, data.daily);
-    this.updateDetailsCard(data.details);
   }
   createHourlyCard() {
     const hourlyCard = document.querySelector("#hourly-card .card-container");
@@ -47,8 +46,30 @@ class DomEditor {
       dailyCard.appendChild(card);
     }
   }
-  updateMainCard(data) {
-    console.log("Update Main Card Method received data successfully");
+  updateMainCard(data, mainData) {
+    const temperature = document.querySelector("#current-temperature");
+    const feelsLike = document.querySelector("#feels-like").children[0];
+    const condition = document.querySelector("#condition");
+    const lastUpdated = document.querySelector("#last-updated").children[0];
+    const wind = document.querySelector("#wind");
+    const humidity = document.querySelector("#humidity");
+    const dewpoint = document.querySelector("#dew-point");
+    const pressure = document.querySelector("#pressure");
+    const uvIndex = document.querySelector("#uv-index");
+    const sunrise = document.querySelector("#sunrise");
+    const sunset = document.querySelector("#sunset");
+    // update content
+    temperature.textContent = mainData.temperature;
+    feelsLike.textContent = mainData.feelsLike;
+    condition.textContent = mainData.weatherCode;
+    lastUpdated.textContent = mainData.lastUpdated;
+    wind.textContent = mainData.details.wind;
+    humidity.textContent = mainData.details.humidity;
+    dewpoint.textContent = mainData.details.dewpoint;
+    pressure.textContent = mainData.details.pressure;
+    uvIndex.textContent = mainData.details.uvIndex;
+    sunrise.textContent = mainData.details.sunrise;
+    sunset.textContent = mainData.details.sunset;
   }
 
   updateHourlyCard(data, hourlyData) {
@@ -100,7 +121,6 @@ class DomEditor {
       chanceOfRain.textContent = dailyData.rainChances[i] + "%";
     }
   }
-  updateDetailsCard(data) {}
 }
 
 const domEditor = new DomEditor();
