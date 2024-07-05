@@ -1,5 +1,6 @@
 import { parser } from "./parser";
 import { weatherCondition } from "./weatherCondition";
+import Rain from "/src/assets/details/rainy.svg";
 
 class DomEditor {
   constructor() {}
@@ -21,28 +22,36 @@ class DomEditor {
       const time = document.createElement("p");
       const temperature = document.createElement("p");
       const condition = document.createElement("img");
+      const rain = document.createElement("div");
+      const rainIcon = document.createElement("img");
       const chanceOfRain = document.createElement("p");
-      //add classes
+      //add classes/attributes
       card.classList.add("card");
+      rainIcon.src = Rain;
       //append elements
-      card.append(time, temperature, condition, chanceOfRain);
+      rain.append(rainIcon, chanceOfRain);
+      card.append(time, temperature, condition, rain);
       hourlyCard.appendChild(card);
     }
   }
   createDailyCard() {
     const dailyCard = document.querySelector("#daily-card .card-container");
     //insert data for up to 48 hours
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 8; i++) {
       const card = document.createElement("div");
       const day = document.createElement("p");
       const maxTemp = document.createElement("p");
       const minTemp = document.createElement("p");
       const condition = document.createElement("img");
       const chanceOfRain = document.createElement("p");
-      //add classes
+      const infoContainer = document.createElement("div");
+      const dayContainer = document.createElement("div");
+      //add classes/attributes
       card.classList.add("card");
       //append elements
-      card.append(day, maxTemp, minTemp, condition, chanceOfRain);
+      dayContainer.appendChild(day);
+      infoContainer.append(maxTemp, minTemp, condition, chanceOfRain);
+      card.append(dayContainer, infoContainer);
       dailyCard.appendChild(card);
     }
   }
@@ -50,24 +59,33 @@ class DomEditor {
     const temperature = document.querySelector("#current-temperature");
     const feelsLike = document.querySelector("#feels-like").children[0];
     const condition = document.querySelector("#condition");
+    const conditionImage = document.querySelector("#condition-image");
     const lastUpdated = document.querySelector("#last-updated").children[0];
     const wind = document.querySelector("#wind");
     const humidity = document.querySelector("#humidity");
     const dewpoint = document.querySelector("#dew-point");
     const pressure = document.querySelector("#pressure");
     const uvIndex = document.querySelector("#uv-index");
+    const visibility = document.querySelector("#visibility");
     const sunrise = document.querySelector("#sunrise");
     const sunset = document.querySelector("#sunset");
     // update content
-    temperature.textContent = mainData.temperature;
-    feelsLike.textContent = mainData.feelsLike;
-    condition.textContent = mainData.weatherCode;
+    temperature.textContent = mainData.temperature + "°";
+    feelsLike.textContent = mainData.feelsLike + "°";
+    condition.textContent = weatherCondition.weatherCodeDecrypt(
+      mainData.weatherCode
+    );
+    conditionImage.src = weatherCondition.weatherCodeToImage(
+      mainData.weatherCode,
+      mainData.isDay
+    );
     lastUpdated.textContent = mainData.lastUpdated;
     wind.textContent = mainData.details.wind;
     humidity.textContent = mainData.details.humidity;
-    dewpoint.textContent = mainData.details.dewpoint;
+    dewpoint.textContent = mainData.details.dewPoint;
     pressure.textContent = mainData.details.pressure;
     uvIndex.textContent = mainData.details.uvIndex;
+    visibility.textContent = mainData.details.visibility;
     sunrise.textContent = mainData.details.sunrise;
     sunset.textContent = mainData.details.sunset;
   }
@@ -80,13 +98,13 @@ class DomEditor {
       const time = card.children[0];
       const temperature = card.children[1];
       const condition = card.children[2];
-      const chanceOfRain = card.children[3];
+      const chanceOfRain = card.children[3].children[1];
       //edit content
       time.textContent = parser.convertMilitaryTimeHour(
         (data.localHour + i) % 24
       );
       temperature.textContent =
-        hourlyData.temperatures[data.indexHour + i] + "°F";
+        hourlyData.temperatures[data.indexHour + i] + "°";
       condition.setAttribute(
         "alt",
         hourlyData.weatherCodes[data.indexHour + i]
@@ -103,17 +121,18 @@ class DomEditor {
     const dailyCard = document.querySelector("#daily-card .card-container");
     const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     //insert data for up to 48 hours
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 8; i++) {
       const card = dailyCard.children[i];
-      const day = card.children[0];
-      const maxTemp = card.children[1];
-      const minTemp = card.children[2];
-      const condition = card.children[3];
-      const chanceOfRain = card.children[4];
+      const day = card.children[0].children[0];
+      const maxTemp = card.children[1].children[0];
+      const minTemp = card.children[1].children[1];
+      const condition = card.children[1].children[2];
+      const chanceOfRain = card.children[1].children[3];
       //edit content
-      day.textContent = days[(data.localTime.weekday + i - 1) % 7];
-      maxTemp.textContent = dailyData.maxTemperatures[i] + "°C";
-      minTemp.textContent = dailyData.minTemperatures[i] + "°C";
+      day.textContent =
+        i === 0 ? "Today" : days[(data.localTime.weekday + i - 1) % 7];
+      maxTemp.textContent = dailyData.maxTemperatures[i] + "°";
+      minTemp.textContent = dailyData.minTemperatures[i] + "°";
       condition.setAttribute("alt", dailyData.weatherCodes[i]);
       condition.src = weatherCondition.weatherCodeToImage(
         dailyData.weatherCodes[i]

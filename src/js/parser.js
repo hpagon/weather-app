@@ -36,9 +36,8 @@ class Parser {
         country: locationJson.country,
         temperature: weatherJson.current.temperature_2m,
         feelsLike: weatherJson.current.apparent_temperature,
-        weatherCode: weatherCondition.weatherCodeDecrypt(
-          weatherJson.current.weather_code
-        ),
+        weatherCode: weatherJson.current.weather_code,
+        isDay: weatherJson.current.is_day,
         lastUpdated,
         details: {
           wind: weatherJson.current.wind_speed_10m,
@@ -46,6 +45,7 @@ class Parser {
           dewPoint: weatherJson.current.dew_point_2m,
           pressure: weatherJson.current.surface_pressure,
           uvIndex: weatherJson.daily.uv_index_max[0],
+          visibility: weatherJson.current.visibility,
           sunrise,
           sunset,
         },

@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="assets/sun.png" />
     <title>Weather App</title>
   </head>
   <body>
@@ -17,41 +18,87 @@
       <div id="main">
         <div id="main-card">
           <div class="card">
-            <h1 id="current-temperature">104 F</h1>
-            <p id="feels-like">Feels like <span>107 f</span></p>
-            <p id="condition">Overcast</p>
+            <div id="location-container">
+              <p>
+                <span id="city">Los Angeles</span>,
+                <span id="country">California</span>
+              </p>
+            </div>
+            <div id="temperature-container">
+              <h1 id="current-temperature">104°</h1>
+              <p id="feels-like">Feels like <span>107 f</span></p>
+            </div>
+            <div id="condition-container">
+              <img
+                src="/src/assets/cloud.png"
+                alt="Condition"
+                id="condition-image"
+              />
+              <p id="condition">Overcast</p>
+            </div>
             <p id="last-updated">As of <span>2:13 PM</span></p>
-            <div id="detail-card">
-              <h2>Today's Details</h2>
-              <div class="card">
-                <div class="detail">
-                  <p>Wind</p>
-                  <p id="wind"></p>
-                </div>
-                <div class="detail">
-                  <p>Humidity</p>
-                  <p id="humidity"></p>
-                </div>
-                <div class="detail">
-                  <p>DewPoint</p>
-                  <p id="dew-point"></p>
-                </div>
-                <div class="detail">
-                  <p>Pressure</p>
-                  <p id="pressure"></p>
-                </div>
-                <div class="detail">
-                  <p>UVIndex</p>
-                  <p id="uv-index"></p>
-                </div>
-                <div class="detail">
-                  <p>Sunrise</p>
-                  <p id="sunrise"></p>
-                </div>
-                <div class="detail">
-                  <p>Sunset</p>
-                  <p id="sunset"></p>
-                </div>
+          </div>
+        </div>
+        <div id="detail-card">
+          <h2>Today's Details</h2>
+          <div class="card">
+            <div class="detail">
+              <img src="/src/assets/details/wind.svg" alt="Wind icon" />
+              <div>
+                <p>Wind</p>
+                <p id="wind"></p>
+              </div>
+            </div>
+            <div class="detail">
+              <img src="/src/assets/details/water.svg" alt="Humidity icon" />
+              <div>
+                <p>Humidity</p>
+                <p id="humidity"></p>
+              </div>
+            </div>
+            <div class="detail">
+              <img src="/src/assets/details/dewPoint.svg" alt="DewPoint icon" />
+              <div>
+                <p>DewPoint</p>
+                <p id="dew-point"></p>
+              </div>
+            </div>
+            <div class="detail">
+              <img src="/src/assets/details/pressure.svg" alt="Pressure icon" />
+              <div>
+                <p>Pressure</p>
+                <p id="pressure"></p>
+              </div>
+            </div>
+            <div class="detail">
+              <img src="/src/assets/details/uvIndex.svg" alt="UVIndex icon" />
+              <div>
+                <p>UVIndex</p>
+                <p id="uv-index"></p>
+              </div>
+            </div>
+            <div class="detail">
+              <img
+                src="/src/assets/details/visibility.svg"
+                alt="Visibility icon"
+              />
+              <div>
+                <p>Visibility</p>
+                <p id="visibility"></p>
+              </div>
+            </div>
+            <div class="detail">
+              <img src="/src/assets/details/sunrise.svg" alt="Sunrise icon" />
+              <div>
+                <p>Sunrise</p>
+                <p id="sunrise"></p>
+              </div>
+            </div>
+            <div class="detail">
+              <img src="/src/assets/details/sunset.svg" alt="Sunset icon" />
+              <div>
+                <p>Sunset</p>
+                <p id="sunset"></p>
               </div>
             </div>
           </div>
