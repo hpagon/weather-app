@@ -5,7 +5,7 @@
 }
 
 :root {
-  --background-color-one: rgba(0, 0, 0, 0.5);
+  --background-color-one: rgba(0, 0, 0, 0.3);
   font-family: "Roboto";
 }
 
@@ -19,12 +19,45 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(#0096c7, #0096c7, lightblue);
+  background-color: #343a40;
 }
 
 /* header styles */
 #header {
   padding: 15px 0px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#header form {
+  position: relative;
+  min-width: 250px;
+  max-width: 700px;
+  width: 30%;
+}
+
+#header form input[type="search"] {
+  border: none;
+  border-radius: 8px;
+  height: 35px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px 35px 5px 10px;
+}
+
+#header form input[type="search"]::-webkit-search-cancel-button {
+  display: none;
+}
+
+#header form::after {
+  content: url("/src/assets/details/search.svg");
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  right: 2px;
+  top: 4px;
 }
 
 /* Main Styles */
@@ -34,7 +67,6 @@
   grid-template-rows: 200px min-content;
   gap: 15px;
   width: 70%;
-  /* max-width: 1200px; */
 }
 
 /* Main Card Styles */
