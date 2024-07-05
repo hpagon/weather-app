@@ -56,6 +56,8 @@ class DomEditor {
     }
   }
   updateMainCard(data, mainData) {
+    const city = document.querySelector("#city");
+    const country = document.querySelector("#country");
     const temperature = document.querySelector("#current-temperature");
     const feelsLike = document.querySelector("#feels-like").children[0];
     const condition = document.querySelector("#condition");
@@ -70,6 +72,9 @@ class DomEditor {
     const sunrise = document.querySelector("#sunrise");
     const sunset = document.querySelector("#sunset");
     // update content
+    city.textContent = mainData.city;
+    country.textContent =
+      mainData.country === "United States" ? mainData.state : mainData.country;
     temperature.textContent = mainData.temperature + "°";
     feelsLike.textContent = mainData.feelsLike + "°";
     condition.textContent = weatherCondition.weatherCodeDecrypt(
@@ -80,6 +85,7 @@ class DomEditor {
       mainData.isDay
     );
     lastUpdated.textContent = mainData.lastUpdated;
+    // update details content
     wind.textContent = mainData.details.wind;
     humidity.textContent = mainData.details.humidity;
     dewpoint.textContent = mainData.details.dewPoint;

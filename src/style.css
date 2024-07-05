@@ -1,5 +1,12 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("./assets/font/Roboto-Regular.ttf") format("truetype");
+  font-style: normal;
+}
+
 :root {
-  --background-color-one: rgba(0, 0, 0, 0.3);
+  --background-color-one: rgba(0, 0, 0, 0.5);
+  font-family: "Roboto";
 }
 
 * {
@@ -12,7 +19,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(lightblue, gray);
+  background: linear-gradient(#0096c7, #0096c7, lightblue);
 }
 
 /* header styles */
@@ -34,11 +41,12 @@
 #main-card {
   grid-column: 1/2;
 }
+
 #main-card .card {
   height: 90%;
   padding: 10px 20px;
   display: grid;
-  grid-template-columns: max-content max-content 1fr;
+  grid-template-columns: max-content 1fr max-content;
   grid-template-rows: max-content max-content 1fr;
   gap: 5px;
 }
@@ -50,11 +58,15 @@
 }
 
 #temperature-container {
-  padding-right: 20px;
+  padding-right: 40px;
+}
+
+#temperature-container h1 {
+  font-size: 64px;
 }
 
 #main-card #condition-image {
-  height: 70px;
+  height: 120px;
 }
 
 #main-card .card > p {
@@ -69,10 +81,11 @@
   align-items: center;
   font-size: 20px;
   font-weight: 600;
+  grid-area: 2 / 3 / 3 / 4;
 }
 
 #condition-container img {
-  margin-right: 5px;
+  margin-right: 15px;
 }
 
 /* Detail card styles */
@@ -175,7 +188,11 @@
   margin-right: 5px;
 }
 
-/*  */
+/* General card styles */
+h2 {
+  color: white;
+}
+
 .card {
   background-color: var(--background-color-one);
   color: white;
