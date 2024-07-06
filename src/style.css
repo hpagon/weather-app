@@ -6,6 +6,9 @@
 
 :root {
   --background-color-one: rgba(0, 0, 0, 0.3);
+  --background-color-two: rgba(0, 0, 0, 0.5);
+  --background-color-three: rgba(0, 0, 0, 0.8);
+  --font-color-one: #f8f9fa;
   font-family: "Roboto";
 }
 
@@ -42,7 +45,7 @@
   border-radius: 8px;
   height: 35px;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--background-color-two);
   color: white;
   padding: 5px 35px 5px 10px;
 }
@@ -58,6 +61,25 @@
   width: 30px;
   right: 2px;
   top: 4px;
+  cursor: pointer;
+}
+
+#search-results-container {
+  width: 100%;
+  position: absolute;
+  height: 200px;
+  overflow: auto;
+}
+
+.search-result {
+  background-color: var(--background-color-three);
+  color: var(--font-color-one);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.search-result:focus {
+  background-color: lightblue;
 }
 
 /* Main Styles */

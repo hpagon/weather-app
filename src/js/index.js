@@ -21,6 +21,11 @@ class App {
     console.log(data);
     domEditor.updateWeather(data);
   }
+  async searchLocations(cityName) {
+    let locationJson = await apiHandler.fetchLocation(cityName);
+    console.log(locationJson);
+    domEditor.updateSearchResults(locationJson.results);
+  }
 }
 
 const app = new App();

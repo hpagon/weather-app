@@ -10,13 +10,15 @@
   <body>
     <div id="container">
       <div id="header">
-        <form action="" id="searchbar-form">
+        <form action="" id="searchbar-form" autocomplete="off">
           <input
             type="search"
             name="location"
             id="searchbar"
             placeholder="Enter City Name"
+            tabindex="1"
           />
+          <div id="search-results-container"></div>
           <!-- <button>Search</button> -->
         </form>
       </div>

@@ -7,6 +7,7 @@ class DomEditor {
   loadContent() {
     this.createDailyCard();
     this.createHourlyCard();
+    this.createSearchResults();
   }
 
   updateWeather(data) {
@@ -54,6 +55,26 @@ class DomEditor {
       card.append(dayContainer, infoContainer);
       dailyCard.appendChild(card);
     }
+  }
+  createSearchResults() {
+    const resultsContainer = document.querySelector(
+      "#search-results-container"
+    );
+    for (let i = 0; i < 10; i++) {
+      const resultContainer = document.createElement("div");
+      const resultText = document.createElement("p");
+      const city = document.createElement("span");
+      const admin1 = document.createElement("span");
+      const country = document.createElement("span");
+      //add classes/attributes
+      resultContainer.classList.add("search-result");
+      resultContainer.setAttribute("tabindex", i + 2);
+      //append elements
+      resultText.append(city, admin1, country);
+      resultContainer.appendChild(resultText);
+      resultsContainer.appendChild(resultContainer);
+    }
+    resultsContainer.style.display = "none";
   }
   updateMainCard(data, mainData) {
     const city = document.querySelector("#city");
@@ -145,6 +166,22 @@ class DomEditor {
       );
       chanceOfRain.textContent = dailyData.rainChances[i] + "%";
     }
+  }
+  updateSearchResults(results) {
+    const resultsContainer = document.querySelector(
+      "#search-results-container"
+    );
+    for (let i = 0; i < 10; i++) {
+      const resultContainer = resultsContainer.children[i];
+      const city = resultContainer.children[0].children[0];
+      const admin1 = resultContainer.children[0].children[1];
+      const country = resultContainer.children[0].children[2];
+      //update content
+      city.textContent = results[i].name + ", ";
+      admin1.textContent = results[i].admin1 ? results[i].admin1 + ", " : "";
+      country.textContent = results[i].country;
+    }
+    resultsContainer.style.display = "block";
   }
 }
 
