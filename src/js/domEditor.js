@@ -1,5 +1,6 @@
 import { parser } from "./parser";
 import { weatherCondition } from "./weatherCondition";
+import { domHandler } from "./domHandler";
 import Rain from "/src/assets/details/rainy.svg";
 
 class DomEditor {
@@ -69,6 +70,8 @@ class DomEditor {
       //add classes/attributes
       resultContainer.classList.add("search-result");
       resultContainer.setAttribute("tabindex", i + 2);
+      //add events
+      // domHandler.searchResultSubmitEvent(resultContainer);
       //append elements
       resultText.append(city, admin1, country);
       resultContainer.appendChild(resultText);

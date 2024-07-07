@@ -5,19 +5,28 @@ import { domEditor } from "./domEditor.js";
 import "../style.css";
 
 class App {
+  #currentSearchResults;
   constructor() {
     domEditor.loadContent();
   }
-  async updateWeather(cityName) {
-    let locationJson = await apiHandler.fetchLocation(cityName);
-    locationJson = locationJson.results[0];
+  async updateWeather(cityName, locationIndex) {
+    let data;
+    let locationJson;
+    //if no selected location, use the first search result
+    if (locationIndex === undefined) {
+      locationJson = await apiHandler.fetchLocation(cityName);
+      locationJson = locationJson.results[0];
+    } else {
+      //otherwise use selected location
+      locationJson = this.#currentSearchResults[locationIndex];
+    }
     console.log(locationJson);
     let weatherJson = await apiHandler.fetchWeather(
       locationJson.latitude,
       locationJson.longitude
     );
     console.log(weatherJson);
-    const data = parser.parseWeatherData(locationJson, weatherJson);
+    data = parser.parseWeatherData(locationJson, weatherJson);
     console.log(data);
     domEditor.updateWeather(data);
   }
@@ -25,6 +34,7 @@ class App {
     let locationJson = await apiHandler.fetchLocation(cityName);
     console.log(locationJson);
     domEditor.updateSearchResults(locationJson.results);
+    this.#currentSearchResults = locationJson.results;
   }
 }
 
