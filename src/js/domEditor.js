@@ -61,6 +61,9 @@ class DomEditor {
     const resultsContainer = document.querySelector(
       "#search-results-container"
     );
+    const message = document.createElement("div");
+    message.id = "search-results-message";
+    resultsContainer.appendChild(message);
     for (let i = 0; i < 10; i++) {
       const resultContainer = document.createElement("div");
       const resultText = document.createElement("p");
@@ -175,14 +178,28 @@ class DomEditor {
       "#search-results-container"
     );
     for (let i = 0; i < 10; i++) {
-      const resultContainer = resultsContainer.children[i];
+      const resultContainer = resultsContainer.children[i + 1];
+      // console.log("results container: ", resultsContainer);
+      console.log("result container: ", resultContainer);
       const city = resultContainer.children[0].children[0];
       const admin1 = resultContainer.children[0].children[1];
       const country = resultContainer.children[0].children[2];
+      //if results has less than 10 entries, hide the empty entries
+      if (results === undefined || i >= results.length) {
+        resultContainer.style.display = "none";
+        continue;
+      }
       //update content
       city.textContent = results[i].name + ", ";
       admin1.textContent = results[i].admin1 ? results[i].admin1 + ", " : "";
       country.textContent = results[i].country;
+      //make entry visible
+      resultContainer.style.display = "block";
+    }
+    resultsContainer.children[0].style.display = "none";
+    if (results === undefined) {
+      resultsContainer.children[0].style.display = "block";
+      resultsContainer.children[0].textContent = "No matches found.";
     }
     resultsContainer.style.display = "block";
   }

@@ -7,27 +7,27 @@ class DomHandler {
     //add event listeners
     this.#searchbarForm.addEventListener("keyup", (e) => {
       if (e.key === "Enter") {
-        this.searchbarSubmitEvent(e);
+        this.searchbarSubmitEvent();
       }
     });
     //prevents form submission from reloading page
     this.#searchbarForm.addEventListener("submit", (e) => e.preventDefault());
-    searchbar.addEventListener("keyup", () => {
-      this.searchbarResultsEvent();
+    searchbar.addEventListener("keyup", (e) => {
+      if (e.key !== "Enter") this.searchbarResultsEvent();
     });
     this.#searchbarForm.addEventListener("keydown", this.tabSearchResult);
     this.#searchbarForm.addEventListener("keydown", this.shiftTabSearchResult);
     window.addEventListener("click", this.hideSearchResults);
     searchbar.addEventListener("onfocus", this.showExistingSearchResults);
     searchbar.addEventListener("click", this.showExistingSearchResults);
+    //make it so it only triggers when individual search resutls are clicked
     document
       .querySelector("#search-results-container")
       .addEventListener("click", () => {
         this.searchbarSubmitEvent();
       });
   }
-  searchbarSubmitEvent(e) {
-    // e.preventDefault();
+  searchbarSubmitEvent() {
     let locationIndex = undefined;
     // set location index if submit event was triggered with search result selected
     if (document.activeElement.classList.value === "search-result") {
@@ -105,17 +105,6 @@ class DomHandler {
         "block";
     }
   }
-  //event to submit form when search form submitted with result selected
-  // searchResultSubmitEvent(searchResult) {
-  //   searchResult.addEventListener("click", () => {
-  //     this.#searchbarForm.dispatchEvent(new Event("submit"));
-  //   });
-  //   searchResult.addEventListener("keyup", (e) => {
-  //     if (e.key === "Enter") {
-  //       this.#searchbarForm.dispatchEvent(new Event("submit"));
-  //     }
-  //   });
-  // }
 }
 
 const domHandler = new DomHandler();

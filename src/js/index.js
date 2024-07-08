@@ -15,6 +15,10 @@ class App {
     //if no selected location, use the first search result
     if (locationIndex === undefined) {
       locationJson = await apiHandler.fetchLocation(cityName);
+      if (locationJson.results === undefined) {
+        domEditor.updateSearchResults(undefined);
+        return;
+      }
       locationJson = locationJson.results[0];
     } else {
       //otherwise use selected location

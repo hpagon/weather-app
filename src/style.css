@@ -67,19 +67,26 @@
 #search-results-container {
   width: 100%;
   position: absolute;
-  height: 200px;
+  min-height: 25px;
+  max-height: 200px;
   overflow: auto;
+  border-radius: 8px;
+  background-color: var(--background-color-three);
+  color: var(--font-color-one);
 }
 
 .search-result {
-  background-color: var(--background-color-three);
-  color: var(--font-color-one);
-  border-radius: 8px;
   padding: 10px;
+  border-bottom: 1px solid white;
 }
 
 .search-result:focus {
   background-color: lightblue;
+}
+
+#search-results-message {
+  padding: 10px;
+  text-align: center;
 }
 
 /* Main Styles */
