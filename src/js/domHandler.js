@@ -13,7 +13,13 @@ class DomHandler {
     //prevents form submission from reloading page
     this.#searchbarForm.addEventListener("submit", (e) => e.preventDefault());
     searchbar.addEventListener("keyup", (e) => {
-      if (e.key !== "Enter") this.searchbarResultsEvent();
+      if (
+        e.key !== "Enter" &&
+        e.key !== "ArrowUp" &&
+        e.key !== "ArrowDown" &&
+        e.key !== "Tab"
+      )
+        this.searchbarResultsEvent();
     });
     this.#searchbarForm.addEventListener("keydown", this.tabSearchResult);
     this.#searchbarForm.addEventListener("keydown", this.shiftTabSearchResult);
@@ -23,13 +29,14 @@ class DomHandler {
   }
   searchbarSubmitEvent() {
     let locationIndex = undefined;
+    const location = new FormData(this.#searchbarForm).get("location");
+    console.log(location);
+    if (location.length < 3) return;
     // set location index if submit event was triggered with search result selected
     if (document.activeElement.classList.value === "search-result") {
       locationIndex =
         parseInt(document.activeElement.getAttribute("tabindex")) - 2;
     }
-    const location = new FormData(this.#searchbarForm).get("location");
-    console.log(location);
     //reset after so we can extract form values correctly
     this.#searchbarForm.reset();
     //make search results dissapear after form reset

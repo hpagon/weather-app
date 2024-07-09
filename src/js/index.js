@@ -11,12 +11,14 @@ class App {
   }
   async updateWeather(cityName, locationIndex) {
     try {
+      domEditor.insertLoadingComponent();
       let data;
       let locationJson;
       //if no selected location, use the first search result
       if (locationIndex === undefined) {
         locationJson = await apiHandler.fetchLocation(cityName);
         if (locationJson.results === undefined) {
+          domEditor.removeLoadingComponent();
           domEditor.updateSearchResults(undefined);
           return;
         }
@@ -34,17 +36,22 @@ class App {
       data = parser.parseWeatherData(locationJson, weatherJson);
       console.log(data);
       domEditor.updateWeather(data);
+      domEditor.removeLoadingComponent();
     } catch (e) {
       this.handleError(e);
+      domEditor.removeLoadingComponent();
     }
   }
   async searchLocations(cityName) {
     try {
+      domEditor.insertLoadingComponent();
       let locationJson = await apiHandler.fetchLocation(cityName);
       console.log(locationJson);
       domEditor.updateSearchResults(locationJson.results);
       this.#currentSearchResults = locationJson.results;
+      domEditor.removeLoadingComponent();
     } catch (e) {
+      domEditor.removeLoadingComponent();
       this.handleError(e);
     }
   }

@@ -219,6 +219,14 @@ class DomEditor {
     message.style.display = "block";
     resultsContainer.style.display = "block";
   }
+  insertLoadingComponent() {
+    const icon = document.querySelector("#searchbar-form img");
+    icon.classList.add("loading");
+  }
+  removeLoadingComponent() {
+    const icon = document.querySelector("#searchbar-form img");
+    icon.classList.remove("loading");
+  }
 }
 
 const domEditor = new DomEditor();
