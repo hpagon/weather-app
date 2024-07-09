@@ -35,8 +35,7 @@ class App {
       console.log(data);
       domEditor.updateWeather(data);
     } catch (e) {
-      //notify client of network error
-      domEditor.displayError(0);
+      this.handleError(e);
     }
   }
   async searchLocations(cityName) {
@@ -46,8 +45,15 @@ class App {
       domEditor.updateSearchResults(locationJson.results);
       this.#currentSearchResults = locationJson.results;
     } catch (e) {
-      //notify client of network error
-      domEditor.displayError(0);
+      this.handleError(e);
+    }
+  }
+  handleError(error) {
+    //notify client of network error
+    if (error.message === "Failed to fetch") {
+      domEditor.displayError("Network error. Please check your connection.");
+    } else {
+      domEditor.displayError("Error occured.");
     }
   }
 }

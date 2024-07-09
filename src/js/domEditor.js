@@ -179,7 +179,7 @@ class DomEditor {
       "#search-results-container"
     );
     if (results === undefined) {
-      this.displayError(1);
+      this.displayError("No matches found.");
       return;
     }
     for (let i = 0; i < 10; i++) {
@@ -205,7 +205,7 @@ class DomEditor {
     resultsContainer.style.display = "block";
   }
   //displays an error message in the results dropdown
-  displayError(num) {
+  displayError(errorMessage) {
     const resultsContainer = document.querySelector(
       "#search-results-container"
     );
@@ -213,19 +213,9 @@ class DomEditor {
     for (let i = 0; i < 10; i++) {
       resultsContainer.children[i + 1].style.display = "none";
     }
+    //change message text and display
     const message = resultsContainer.children[0];
-    //change message depending on context
-    switch (num) {
-      case 0:
-        message.textContent = "Network error. Please check your connection.";
-        break;
-      case 1:
-        message.textContent = "No matches found.";
-        break;
-      default:
-        message.textContent = "Error.";
-        break;
-    }
+    message.textContent = errorMessage;
     message.style.display = "block";
     resultsContainer.style.display = "block";
   }
