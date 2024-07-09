@@ -74,7 +74,7 @@ class DomEditor {
       resultContainer.classList.add("search-result");
       resultContainer.setAttribute("tabindex", i + 2);
       //add events
-      // domHandler.searchResultSubmitEvent(resultContainer);
+      domHandler.searchResultClickEvent(resultContainer);
       //append elements
       resultText.append(city, admin1, country);
       resultContainer.appendChild(resultText);
@@ -173,10 +173,15 @@ class DomEditor {
       chanceOfRain.textContent = dailyData.rainChances[i] + "%";
     }
   }
+  //refreshes the result dropdown based on current context
   updateSearchResults(results) {
     const resultsContainer = document.querySelector(
       "#search-results-container"
     );
+    if (results === undefined) {
+      this.displayError(1);
+      return;
+    }
     for (let i = 0; i < 10; i++) {
       const resultContainer = resultsContainer.children[i + 1];
       // console.log("results container: ", resultsContainer);
@@ -185,7 +190,7 @@ class DomEditor {
       const admin1 = resultContainer.children[0].children[1];
       const country = resultContainer.children[0].children[2];
       //if results has less than 10 entries, hide the empty entries
-      if (results === undefined || i >= results.length) {
+      if (i >= results.length) {
         resultContainer.style.display = "none";
         continue;
       }
@@ -197,10 +202,31 @@ class DomEditor {
       resultContainer.style.display = "block";
     }
     resultsContainer.children[0].style.display = "none";
-    if (results === undefined) {
-      resultsContainer.children[0].style.display = "block";
-      resultsContainer.children[0].textContent = "No matches found.";
+    resultsContainer.style.display = "block";
+  }
+  //displays an error message in the results dropdown
+  displayError(num) {
+    const resultsContainer = document.querySelector(
+      "#search-results-container"
+    );
+    //hide search result boxes
+    for (let i = 0; i < 10; i++) {
+      resultsContainer.children[i + 1].style.display = "none";
     }
+    const message = resultsContainer.children[0];
+    //change message depending on context
+    switch (num) {
+      case 0:
+        message.textContent = "Network error. Please check your connection.";
+        break;
+      case 1:
+        message.textContent = "No matches found.";
+        break;
+      default:
+        message.textContent = "Error.";
+        break;
+    }
+    message.style.display = "block";
     resultsContainer.style.display = "block";
   }
 }

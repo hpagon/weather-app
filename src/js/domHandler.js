@@ -20,12 +20,6 @@ class DomHandler {
     window.addEventListener("click", this.hideSearchResults);
     searchbar.addEventListener("onfocus", this.showExistingSearchResults);
     searchbar.addEventListener("click", this.showExistingSearchResults);
-    //make it so it only triggers when individual search resutls are clicked
-    document
-      .querySelector("#search-results-container")
-      .addEventListener("click", () => {
-        this.searchbarSubmitEvent();
-      });
   }
   searchbarSubmitEvent() {
     let locationIndex = undefined;
@@ -55,9 +49,10 @@ class DomHandler {
   //shows or hides search results depending on character count (for keydown event)
   searchbarResultsEvent = this.debounce(() => {
     const location = document.querySelector("#searchbar").value;
+    const message = document.querySelector("#search-results-message");
     if (location.length >= 3) {
       app.searchLocations(location);
-    } else {
+    } else if (message.style.display === "none") {
       document.querySelector("#search-results-container").style.display =
         "none";
     }
@@ -104,6 +99,12 @@ class DomHandler {
       document.querySelector("#search-results-container").style.display =
         "block";
     }
+  }
+  //triggers submit event for when individual search result is clicked
+  searchResultClickEvent(searchResult) {
+    searchResult.addEventListener("click", () => {
+      this.searchbarSubmitEvent();
+    });
   }
 }
 

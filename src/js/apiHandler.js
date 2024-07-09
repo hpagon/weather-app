@@ -11,6 +11,7 @@ class APIHandler {
       return json;
     } catch (error) {
       console.log(error);
+      throw error;
     }
   }
   async fetchWeather(latitude, longitude) {
@@ -22,6 +23,7 @@ class APIHandler {
       return json;
     } catch (error) {
       console.log(error);
+      throw error;
     }
   }
 }
