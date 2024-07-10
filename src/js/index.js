@@ -1,5 +1,5 @@
 import { apiHandler } from "./apiHandler.js";
-import { domHandler } from "./domHandler.js";
+// import { domHandler } from "./domHandler.js";
 import { parser } from "./parser.js";
 import { domEditor } from "./domEditor.js";
 import "../style.css";

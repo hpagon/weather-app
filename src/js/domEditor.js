@@ -12,6 +12,13 @@ class DomEditor {
   }
 
   updateWeather(data) {
+    //calculate imperial data if data is set to imperial on load
+    const toggleButton = document.querySelector("#unit-toggle");
+    if (toggleButton.textContent === "Imperial (F°)") {
+      console.log("converted to imperial");
+      parser.calculateImperialUnits();
+    }
+    //update cards
     this.updateMainCard(data, data.main);
     this.updateHourlyCard(data, data.hourly);
     this.updateDailyCard(data, data.daily);
@@ -98,12 +105,15 @@ class DomEditor {
     const visibility = document.querySelector("#visibility");
     const sunrise = document.querySelector("#sunrise");
     const sunset = document.querySelector("#sunset");
+    //get suffixes to select correct units
+    const temperatureSuffix = this.getTemperatureSuffix();
+    const distanceSuffix = this.getDistanceSuffix();
     // update content
     city.textContent = mainData.city;
     country.textContent =
       mainData.country === "United States" ? mainData.state : mainData.country;
-    temperature.textContent = mainData.temperature + "°";
-    feelsLike.textContent = mainData.feelsLike + "°";
+    temperature.textContent = mainData["temperature" + temperatureSuffix] + "°";
+    feelsLike.textContent = mainData["feelsLike" + temperatureSuffix] + "°";
     condition.textContent = weatherCondition.weatherCodeDecrypt(
       mainData.weatherCode
     );
@@ -113,12 +123,18 @@ class DomEditor {
     );
     lastUpdated.textContent = mainData.lastUpdated;
     // update details content
-    wind.textContent = mainData.details.wind;
-    humidity.textContent = mainData.details.humidity;
-    dewpoint.textContent = mainData.details.dewPoint;
-    pressure.textContent = mainData.details.pressure;
+    wind.textContent =
+      mainData.details["wind" + distanceSuffix] + data.units.wind;
+    humidity.textContent = mainData.details.humidity + "%";
+    dewpoint.textContent =
+      mainData.details["dewPoint" + temperatureSuffix] + "°";
+    pressure.textContent =
+      mainData.details.pressure + " " + data.units.pressure;
     uvIndex.textContent = mainData.details.uvIndex;
-    visibility.textContent = mainData.details.visibility;
+    visibility.textContent =
+      mainData.details["visibility" + distanceSuffix] +
+      " " +
+      data.units.visibility;
     sunrise.textContent = mainData.details.sunrise;
     sunset.textContent = mainData.details.sunset;
   }
@@ -132,12 +148,15 @@ class DomEditor {
       const temperature = card.children[1];
       const condition = card.children[2];
       const chanceOfRain = card.children[3].children[1];
+      //get unit suffixes
+      const temperatureSuffix = this.getTemperatureSuffix();
       //edit content
       time.textContent = parser.convertMilitaryTimeHour(
         (data.localHour + i) % 24
       );
       temperature.textContent =
-        hourlyData.temperatures[data.indexHour + i] + "°";
+        hourlyData["temperatures" + temperatureSuffix][data.indexHour + i] +
+        "°";
       condition.setAttribute(
         "alt",
         hourlyData.weatherCodes[data.indexHour + i]
@@ -161,11 +180,15 @@ class DomEditor {
       const minTemp = card.children[1].children[1];
       const condition = card.children[1].children[2];
       const chanceOfRain = card.children[1].children[3];
+      //get unit suffixes
+      const temperatureSuffix = this.getTemperatureSuffix();
       //edit content
       day.textContent =
         i === 0 ? "Today" : days[(data.localTime.weekday + i - 1) % 7];
-      maxTemp.textContent = dailyData.maxTemperatures[i] + "°";
-      minTemp.textContent = dailyData.minTemperatures[i] + "°";
+      maxTemp.textContent =
+        dailyData["maxTemperatures" + temperatureSuffix][i] + "°";
+      minTemp.textContent =
+        dailyData["minTemperatures" + temperatureSuffix][i] + "°";
       condition.setAttribute("alt", dailyData.weatherCodes[i]);
       condition.src = weatherCondition.weatherCodeToImage(
         dailyData.weatherCodes[i]
@@ -185,7 +208,7 @@ class DomEditor {
     for (let i = 0; i < 10; i++) {
       const resultContainer = resultsContainer.children[i + 1];
       // console.log("results container: ", resultsContainer);
-      console.log("result container: ", resultContainer);
+      // console.log("result container: ", resultContainer);
       const city = resultContainer.children[0].children[0];
       const admin1 = resultContainer.children[0].children[1];
       const country = resultContainer.children[0].children[2];
@@ -226,6 +249,28 @@ class DomEditor {
   removeLoadingComponent() {
     const icon = document.querySelector("#searchbar-form img");
     icon.classList.remove("loading");
+  }
+  toggleUnits() {
+    const toggleButton = document.querySelector("#unit-toggle");
+    if (toggleButton.textContent === "Metric (C°)") {
+      console.log("converted to imperial");
+      parser.calculateImperialUnits();
+      toggleButton.textContent = "Imperial (F°)";
+    } else {
+      console.log("converted to metric");
+      toggleButton.textContent = "Metric (C°)";
+    }
+    this.updateWeather(parser.getCurrentData());
+  }
+  getTemperatureSuffix() {
+    const toggleButton = document.querySelector("#unit-toggle");
+    if (toggleButton.textContent === "Metric (C°)") return "";
+    return "_f";
+  }
+  getDistanceSuffix() {
+    const toggleButton = document.querySelector("#unit-toggle");
+    if (toggleButton.textContent === "Metric (C°)") return "";
+    return "_miles";
   }
 }
 

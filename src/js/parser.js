@@ -2,6 +2,7 @@ import { DateTime } from "luxon";
 import { weatherCondition } from "./weatherCondition";
 
 class Parser {
+  #currentData;
   constructor() {}
   parseWeatherData(locationJson, weatherJson) {
     //convert utc to local time
@@ -25,7 +26,7 @@ class Parser {
       weatherJson.daily.sunset[0],
       locationJson.timezone
     ).toLocaleString(DateTime.TIME_SIMPLE);
-    return {
+    let data = {
       localTime: currentTime,
       localHour: currentTime.hour,
       time: weatherJson.current.time,
@@ -62,7 +63,15 @@ class Parser {
         weatherCodes: weatherJson.daily.weather_code,
         rainChances: weatherJson.daily.precipitation_probability_mean,
       },
+      units: {
+        wind: "km/h",
+        pressure: "hPa",
+        visibility: "m",
+        converted: false,
+      },
     };
+    this.#currentData = data;
+    return data;
   }
   //takes an iso date and returns a luxon date in the specified timezone
   convertToLocalTime(date, localTimeZone) {
@@ -71,12 +80,66 @@ class Parser {
     );
     return localDate;
   }
-
   //converts an hour in military time to the standard format
   convertMilitaryTimeHour(hour) {
     const suffix = hour >= 12 ? " pm" : " am";
     const adjustedHour = hour === 12 || hour === 0 ? 12 : hour % 12;
     return adjustedHour + suffix;
+  }
+  //convert deg c to deg f
+  convertCToF(deg) {
+    return Math.round(deg * (9 / 5.0) + 32);
+  }
+  convertKmToMiles(km) {
+    return Math.round(km * 0.62137273664981);
+  }
+  convertMtoMiles(m) {
+    return this.convertKmToMiles(m * 0.001);
+  }
+  //calculates imperial units manually to avoid api call
+  calculateImperialUnits() {
+    if (this.#currentData === undefined) return;
+    //only calculate imperial units once
+    if (!this.#currentData.units.converted) {
+      console.log("Converted to F the first time");
+      //main data
+      this.#currentData.main.temperature_f = this.convertCToF(
+        this.#currentData.main.temperature
+      );
+      this.#currentData.main.feelsLike_f = this.convertCToF(
+        this.#currentData.main.feelsLike
+      );
+      //detaila data
+      this.#currentData.main.details.wind_miles = this.convertKmToMiles(
+        this.#currentData.main.details.wind
+      );
+      this.#currentData.main.details.dewPoint_f = this.convertCToF(
+        this.#currentData.main.details.dewPoint
+      );
+      this.#currentData.main.details.visibility_miles = this.convertMtoMiles(
+        this.#currentData.main.details.visibility
+      );
+      // pressure????????????????????????????????????????
+      //hourly data
+      this.#currentData.hourly.temperatures_f =
+        this.#currentData.hourly.temperatures.map((temp) =>
+          this.convertCToF(temp)
+        );
+      //daily data
+      this.#currentData.daily.maxTemperatures_f =
+        this.#currentData.daily.maxTemperatures.map((temp) =>
+          this.convertCToF(temp)
+        );
+      this.#currentData.daily.minTemperatures_f =
+        this.#currentData.daily.minTemperatures.map((temp) =>
+          this.convertCToF(temp)
+        );
+      //prevent future calculation
+      this.#currentData.units.converted = true;
+    }
+  }
+  getCurrentData() {
+    return this.#currentData;
   }
 }
 

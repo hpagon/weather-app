@@ -1,3 +1,4 @@
+import { domEditor } from "./domEditor";
 import { app } from "./index";
 
 class DomHandler {
@@ -26,6 +27,9 @@ class DomHandler {
     window.addEventListener("click", this.hideSearchResults);
     searchbar.addEventListener("onfocus", this.showExistingSearchResults);
     searchbar.addEventListener("click", this.showExistingSearchResults);
+    document
+      .querySelector("#unit-toggle")
+      .addEventListener("click", this.unitToggleClickEvent);
   }
   searchbarSubmitEvent() {
     let locationIndex = undefined;
@@ -112,6 +116,9 @@ class DomHandler {
     searchResult.addEventListener("click", () => {
       this.searchbarSubmitEvent();
     });
+  }
+  unitToggleClickEvent() {
+    domEditor.toggleUnits();
   }
 }
 
