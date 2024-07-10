@@ -68,6 +68,8 @@ class Parser {
         pressure: "hPa",
         visibility: "m",
         converted: false,
+        wind_miles: "mph",
+        visibility_miles: "miles",
       },
     };
     this.#currentData = data;

@@ -131,7 +131,9 @@ class DomEditor {
     lastUpdated.textContent = mainData.lastUpdated;
     // update details content
     wind.textContent =
-      mainData.details["wind" + distanceSuffix] + data.units.wind;
+      mainData.details["wind" + distanceSuffix] +
+      " " +
+      data.units["wind" + distanceSuffix];
     humidity.textContent = mainData.details.humidity + "%";
     dewpoint.textContent =
       mainData.details["dewPoint" + temperatureSuffix] + "°";
@@ -141,7 +143,7 @@ class DomEditor {
     visibility.textContent =
       mainData.details["visibility" + distanceSuffix] +
       " " +
-      data.units.visibility;
+      data.units["visibility" + distanceSuffix];
     sunrise.textContent = mainData.details.sunrise;
     sunset.textContent = mainData.details.sunset;
   }
@@ -191,7 +193,11 @@ class DomEditor {
       const temperatureSuffix = this.getTemperatureSuffix();
       //edit content
       day.textContent =
-        i === 0 ? "Today" : days[(data.localTime.weekday + i - 1) % 7];
+        i === 0
+          ? "Today"
+          : days[(data.localTime.weekday + i - 1) % 7] +
+            " " +
+            (data.localTime.day + i);
       maxTemp.textContent =
         dailyData["maxTemperatures" + temperatureSuffix][i] + "°";
       minTemp.textContent =
