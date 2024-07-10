@@ -5,10 +5,14 @@ import Rain from "/src/assets/details/rainy.svg";
 
 class DomEditor {
   constructor() {}
+  // initializes page on start up
   loadContent() {
+    //create content
     this.createDailyCard();
     this.createHourlyCard();
     this.createSearchResults();
+    //hide content
+    // document.querySelector("#container").classList.add("start");
   }
 
   updateWeather(data) {
@@ -18,10 +22,13 @@ class DomEditor {
       console.log("converted to imperial");
       parser.calculateImperialUnits();
     }
+    if (data === undefined) return;
     //update cards
     this.updateMainCard(data, data.main);
     this.updateHourlyCard(data, data.hourly);
     this.updateDailyCard(data, data.daily);
+    //show content if hidden
+    document.querySelector("#container").classList.remove("start");
   }
   createHourlyCard() {
     const hourlyCard = document.querySelector("#hourly-card .card-container");
@@ -243,12 +250,16 @@ class DomEditor {
     resultsContainer.style.display = "block";
   }
   insertLoadingComponent() {
-    const icon = document.querySelector("#searchbar-form img");
-    icon.classList.add("loading");
+    const icon1 = document.querySelector("#searchbar-form img");
+    const icon2 = document.querySelector("#logo img");
+    icon1.classList.add("loading");
+    icon2.classList.add("loading");
   }
   removeLoadingComponent() {
-    const icon = document.querySelector("#searchbar-form img");
-    icon.classList.remove("loading");
+    const icon1 = document.querySelector("#searchbar-form img");
+    const icon2 = document.querySelector("#logo img");
+    icon1.classList.remove("loading");
+    icon2.classList.remove("loading");
   }
   toggleUnits() {
     const toggleButton = document.querySelector("#unit-toggle");
@@ -271,6 +282,9 @@ class DomEditor {
     const toggleButton = document.querySelector("#unit-toggle");
     if (toggleButton.textContent === "Metric (C°)") return "";
     return "_miles";
+  }
+  showStartPage() {
+    document.querySelector("#container").classList.add("start");
   }
 }
 

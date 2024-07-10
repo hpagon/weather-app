@@ -30,6 +30,9 @@ class DomHandler {
     document
       .querySelector("#unit-toggle")
       .addEventListener("click", this.unitToggleClickEvent);
+    document
+      .querySelector("#logo")
+      .addEventListener("click", this.logoClickEvent);
   }
   searchbarSubmitEvent() {
     let locationIndex = undefined;
@@ -119,6 +122,9 @@ class DomHandler {
   }
   unitToggleClickEvent() {
     domEditor.toggleUnits();
+  }
+  logoClickEvent() {
+    domEditor.showStartPage();
   }
 }
 

@@ -89,13 +89,21 @@
   display: none;
 }
 
+#header #logo {
+  cursor: pointer;
+  position: relative;
+}
+
+#header #logo img {
+  position: relative;
+}
+
 #header form img {
   position: absolute;
   height: 30px;
   width: 30px;
   right: 3px;
   top: 3px;
-  cursor: pointer;
 }
 
 #header form #search-results-container {
@@ -123,7 +131,21 @@
   text-align: center;
 }
 
-/* searchbar loading styles */
+/* loading styles */
+.loading {
+  animation: rotate 4s infinite linear;
+}
+
+#container.start #header #logo img.loading {
+  top: 35px;
+  left: 35px;
+}
+
+#container #header #logo img.loading {
+  top: 17px;
+  left: 17px;
+}
+
 #header form img.loading {
   content: url("/src/assets/sun.png");
   height: 25px;
@@ -131,7 +153,6 @@
   top: 17px;
   right: -5px;
   cursor: default;
-  animation: rotate 4s infinite linear;
 }
 
 /* Main Styles */
@@ -307,4 +328,41 @@ h2 {
 
 .card-container {
   padding: 5px;
+}
+
+/* start page styles */
+#container.start {
+  justify-content: center;
+}
+
+#container.start #header {
+  flex-direction: column;
+  align-items: center;
+  height: 400px;
+}
+
+#container.start #header div:nth-child(1) {
+  width: min-content;
+}
+
+#container.start #header > div:nth-child(3) {
+  visibility: hidden;
+}
+
+#container.start #header form {
+  width: 40%;
+  max-width: 1250;
+}
+
+#container.start #header div h1 {
+  font-size: 45px;
+}
+
+#container.start #header div img {
+  height: 70px;
+  width: 70px;
+}
+
+#container.start #main {
+  display: none;
 }
