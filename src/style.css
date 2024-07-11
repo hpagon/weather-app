@@ -31,8 +31,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #343a40;
-  background: linear-gradient(lightblue, lightblue);
+  background: linear-gradient(lightblue, #69b0db);
 }
 
 /* header styles */
@@ -41,6 +40,7 @@
   width: 70%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 #header img {
@@ -74,6 +74,7 @@
   min-width: 250px;
   max-width: 700px;
   width: 30%;
+  /* height: min-content; */
 }
 
 #header form input[type="search"] {
@@ -93,6 +94,9 @@
 #header #logo {
   cursor: pointer;
   position: relative;
+  background-color: var(--background-color-one);
+  padding: 10px;
+  border-radius: 8px;
 }
 
 #header #logo img {

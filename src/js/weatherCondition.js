@@ -91,6 +91,33 @@ class WeatherCondition {
       return Storm;
     }
   }
+  weatherCodeToBackground(weatherCode, isDay = 1) {
+    if (weatherCode === 0) {
+      //clear
+      return isDay === 1 ? ["lightblue", "#69b0db"] : ["#152230", "#152230"];
+    } else if (weatherCode < 3) {
+      //partly cloudy
+      return isDay === 1 ? ["#69b0db", "#c1cad9"] : ["#152230", "#0b121a"];
+    } else if (weatherCode < 51) {
+      //cloudy
+      return isDay === 1 ? ["#c1cad9", "gray"] : ["#0b121a", "#0b121a"];
+    } else if (weatherCode < 71) {
+      //rain
+      return isDay === 1 ? ["#c1cad9", "gray"] : ["#0b121a", "#0b121a"];
+    } else if (weatherCode < 80) {
+      //snow
+      return isDay === 1 ? ["#c1cad9", "gray"] : ["#0b121a", "#0b121a"];
+    } else if (weatherCode < 85) {
+      //rain showers
+      return isDay === 1 ? ["#c1cad9", "gray"] : ["#0b121a", "#0b121a"];
+    } else if (weatherCode < 95) {
+      //snow showers
+      return isDay === 1 ? ["#c1cad9", "gray"] : ["#0b121a", "#0b121a"];
+    } else {
+      //thunderstorm
+      return isDay === 1 ? ["#313233", "gray"] : ["#0b121a", "#0b121a"];
+    }
+  }
 }
 
 const weatherCondition = new WeatherCondition();

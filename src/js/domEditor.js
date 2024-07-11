@@ -29,6 +29,14 @@ class DomEditor {
     this.updateDailyCard(data, data.daily);
     //show content if hidden
     document.querySelector("#container").classList.remove("start");
+    //update background
+    const bgColors = weatherCondition.weatherCodeToBackground(
+      data.main.weatherCode,
+      data.main.isDay
+    );
+    document.querySelector(
+      "#container"
+    ).style.background = `linear-gradient(${bgColors[0]}, ${bgColors[1]})`;
   }
   createHourlyCard() {
     const hourlyCard = document.querySelector("#hourly-card .card-container");
