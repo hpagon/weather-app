@@ -14,11 +14,19 @@
 }
 
 :root {
+  --font-color-one: #f8f9fa;
+  --font-color-two: #a3a8a5;
+  font-family: "Roboto";
   --background-color-one: rgba(0, 0, 0, 0.3);
   --background-color-two: rgba(0, 0, 0, 0.5);
   --background-color-three: rgba(0, 0, 0, 0.8);
-  --font-color-one: #f8f9fa;
-  font-family: "Roboto";
+}
+
+:root.night {
+  /* --background-color-one: rgba(0, 0, 0, 0.3); */
+  --background-color-one: rgba(265, 265, 265, 0.1);
+  --background-color-two: rgba(265, 265, 265, 0.1);
+  --background-color-three: rgba(0, 0, 0, 0.3);
 }
 
 * {
@@ -73,8 +81,7 @@
   border-radius: 8px;
   padding: 5px 7px;
   border: none;
-  box-shadow: 0 0 2px var(--font-color-one);
-  background-color: var(--background-color-one);
+  background-color: var(--background-color-two);
   color: var(--font-color-one);
   cursor: pointer;
 }
@@ -408,4 +415,19 @@ h2 {
 
 #container.start #main {
   display: none;
+}
+
+/* pseudo styles */
+#logo:active,
+#options > *:active {
+  scale: 0.95;
+}
+
+#logo:hover,
+#options > *:hover {
+  opacity: 0.9;
+}
+
+#header input[type="search"]::placeholder {
+  color: var(--font-color-two);
 }

@@ -127,7 +127,7 @@ class DomHandler {
     domEditor.toggleUnits();
   }
   logoClickEvent() {
-    domEditor.showStartPage();
+    domEditor.showStartOrWeatherPage();
   }
   refreshClickEvent() {
     app.refreshWeather();

@@ -8,12 +8,12 @@ class App {
   #currentSearchResults;
   constructor() {
     domEditor.loadContent();
-    // if (localStorage.getItem("location") !== null) {
-    //   this.refreshWeather();
-    // }
-    if (localStorage.length !== 0) {
-      domEditor.updateWeather(JSON.parse(localStorage.getItem("data")));
+    if (localStorage.getItem("location") !== null) {
+      this.refreshWeather();
     }
+    // if (localStorage.length !== 0) {
+    //   domEditor.updateWeather(JSON.parse(localStorage.getItem("data")));
+    // }
   }
   async updateWeather(cityName, locationIndex) {
     try {

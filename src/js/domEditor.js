@@ -42,6 +42,10 @@ class DomEditor {
       element.classList.add("updated");
       setTimeout(() => element.classList.remove("updated"), 50);
     }
+    //update root class to change card colors
+    data.main.isDay === 0
+      ? document.documentElement.classList.add("night")
+      : document.documentElement.classList.remove("night");
   }
   createHourlyCard() {
     const hourlyCard = document.querySelector("#hourly-card .card-container");
@@ -305,8 +309,15 @@ class DomEditor {
     if (toggleButton.textContent === "Metric (C°)") return "";
     return "_miles";
   }
-  showStartPage() {
-    document.querySelector("#container").classList.add("start");
+  showStartOrWeatherPage() {
+    const container = document.querySelector("#container");
+    if (container.classList.value === "start") {
+      localStorage.getItem("location") !== null
+        ? container.classList.remove("start")
+        : container.classList.add("start");
+    } else {
+      container.classList.add("start");
+    }
   }
 }
 
