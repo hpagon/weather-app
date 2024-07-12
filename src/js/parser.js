@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { weatherCondition } from "./weatherCondition";
+// import { weatherCondition } from "./weatherCondition";
 
 class Parser {
   #currentData;
@@ -72,6 +72,7 @@ class Parser {
         visibility_miles: "miles",
       },
     };
+    localStorage.setItem("location", JSON.stringify(locationJson));
     this.#currentData = data;
     return data;
   }
@@ -90,10 +91,10 @@ class Parser {
   }
   //convert deg c to deg f
   convertCToF(deg) {
-    return Math.round(deg * (9 / 5.0) + 32);
+    return deg * (9 / 5.0) + 32;
   }
   convertKmToMiles(km) {
-    return Math.round(km * 0.62137273664981);
+    return km * 0.62137273664981;
   }
   convertMtoMiles(m) {
     return this.convertKmToMiles(m * 0.001);

@@ -8,6 +8,12 @@ class App {
   #currentSearchResults;
   constructor() {
     domEditor.loadContent();
+    // if (localStorage.getItem("location") !== null) {
+    //   this.refreshWeather();
+    // }
+    if (localStorage.length !== 0) {
+      domEditor.updateWeather(JSON.parse(localStorage.getItem("data")));
+    }
   }
   async updateWeather(cityName, locationIndex) {
     try {
@@ -37,6 +43,7 @@ class App {
       console.log(data);
       domEditor.updateWeather(data);
       domEditor.removeLoadingComponent();
+      // localStorage.setItem("data", JSON.stringify(data));
     } catch (e) {
       this.handleError(e);
       domEditor.removeLoadingComponent();
@@ -53,6 +60,22 @@ class App {
     } catch (e) {
       domEditor.removeLoadingComponent();
       this.handleError(e);
+    }
+  }
+  async refreshWeather() {
+    try {
+      domEditor.insertLoadingComponent;
+      let location = JSON.parse(localStorage.getItem("location"));
+      let weatherJson = await apiHandler.fetchWeather(
+        location.latitude,
+        location.longitude
+      );
+      let data = parser.parseWeatherData(location, weatherJson);
+      domEditor.updateWeather(data);
+      domEditor.removeLoadingComponent();
+      console.log("done");
+    } catch (error) {
+      this.handleError(error);
     }
   }
   handleError(error) {

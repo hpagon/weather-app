@@ -33,6 +33,9 @@ class DomHandler {
     document
       .querySelector("#logo")
       .addEventListener("click", this.logoClickEvent);
+    document
+      .querySelector("#refresh")
+      .addEventListener("click", this.refreshClickEvent);
   }
   searchbarSubmitEvent() {
     let locationIndex = undefined;
@@ -125,6 +128,9 @@ class DomHandler {
   }
   logoClickEvent() {
     domEditor.showStartPage();
+  }
+  refreshClickEvent() {
+    app.refreshWeather();
   }
 }
 

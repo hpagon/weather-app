@@ -12,7 +12,7 @@ class DomEditor {
     this.createHourlyCard();
     this.createSearchResults();
     //hide content
-    // document.querySelector("#container").classList.add("start");
+    document.querySelector("#container").classList.add("start");
   }
 
   updateWeather(data) {
@@ -37,6 +37,11 @@ class DomEditor {
     document.querySelector(
       "#container"
     ).style.background = `linear-gradient(${bgColors[0]}, ${bgColors[1]})`;
+    //add small animation
+    for (let element of document.querySelectorAll("#main > div > div")) {
+      element.classList.add("updated");
+      setTimeout(() => element.classList.remove("updated"), 50);
+    }
   }
   createHourlyCard() {
     const hourlyCard = document.querySelector("#hourly-card .card-container");
@@ -127,8 +132,10 @@ class DomEditor {
     city.textContent = mainData.city;
     country.textContent =
       mainData.country === "United States" ? mainData.state : mainData.country;
-    temperature.textContent = mainData["temperature" + temperatureSuffix] + "°";
-    feelsLike.textContent = mainData["feelsLike" + temperatureSuffix] + "°";
+    temperature.textContent =
+      Math.round(mainData["temperature" + temperatureSuffix]) + "°";
+    feelsLike.textContent =
+      Math.round(mainData["feelsLike" + temperatureSuffix]) + "°";
     condition.textContent = weatherCondition.weatherCodeDecrypt(
       mainData.weatherCode
     );
@@ -139,17 +146,17 @@ class DomEditor {
     lastUpdated.textContent = mainData.lastUpdated;
     // update details content
     wind.textContent =
-      mainData.details["wind" + distanceSuffix] +
+      Math.round(mainData.details["wind" + distanceSuffix]) +
       " " +
       data.units["wind" + distanceSuffix];
     humidity.textContent = mainData.details.humidity + "%";
     dewpoint.textContent =
-      mainData.details["dewPoint" + temperatureSuffix] + "°";
+      Math.round(mainData.details["dewPoint" + temperatureSuffix]) + "°";
     pressure.textContent =
-      mainData.details.pressure + " " + data.units.pressure;
+      Math.round(mainData.details.pressure) + " " + data.units.pressure;
     uvIndex.textContent = mainData.details.uvIndex;
     visibility.textContent =
-      mainData.details["visibility" + distanceSuffix] +
+      Math.round(mainData.details["visibility" + distanceSuffix]) +
       " " +
       data.units["visibility" + distanceSuffix];
     sunrise.textContent = mainData.details.sunrise;
@@ -172,8 +179,9 @@ class DomEditor {
         (data.localHour + i) % 24
       );
       temperature.textContent =
-        hourlyData["temperatures" + temperatureSuffix][data.indexHour + i] +
-        "°";
+        Math.round(
+          hourlyData["temperatures" + temperatureSuffix][data.indexHour + i]
+        ) + "°";
       condition.setAttribute(
         "alt",
         hourlyData.weatherCodes[data.indexHour + i]
@@ -207,9 +215,9 @@ class DomEditor {
             " " +
             (data.localTime.day + i);
       maxTemp.textContent =
-        dailyData["maxTemperatures" + temperatureSuffix][i] + "°";
+        Math.round(dailyData["maxTemperatures" + temperatureSuffix][i]) + "°";
       minTemp.textContent =
-        dailyData["minTemperatures" + temperatureSuffix][i] + "°";
+        Math.round(dailyData["minTemperatures" + temperatureSuffix][i]) + "°";
       condition.setAttribute("alt", dailyData.weatherCodes[i]);
       condition.src = weatherCondition.weatherCodeToImage(
         dailyData.weatherCodes[i]
