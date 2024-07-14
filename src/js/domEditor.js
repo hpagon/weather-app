@@ -1,7 +1,7 @@
 import { parser } from "./parser";
 import { weatherCondition } from "./weatherCondition";
 import { domHandler } from "./domHandler";
-import Rain from "/src/assets/details/rainy.svg";
+import Rain from "/src/assets/details/water.svg";
 
 class DomEditor {
   constructor() {}
@@ -76,14 +76,18 @@ class DomEditor {
       const maxTemp = document.createElement("p");
       const minTemp = document.createElement("p");
       const condition = document.createElement("img");
+      const rainContainer = document.createElement("div");
+      const rainIcon = document.createElement("img");
       const chanceOfRain = document.createElement("p");
       const infoContainer = document.createElement("div");
       const dayContainer = document.createElement("div");
       //add classes/attributes
       card.classList.add("card");
+      rainIcon.src = Rain;
       //append elements
       dayContainer.appendChild(day);
-      infoContainer.append(maxTemp, minTemp, condition, chanceOfRain);
+      rainContainer.append(rainIcon, chanceOfRain);
+      infoContainer.append(maxTemp, minTemp, condition, rainContainer);
       card.append(dayContainer, infoContainer);
       dailyCard.appendChild(card);
     }
@@ -115,6 +119,7 @@ class DomEditor {
   }
   updateMainCard(data, mainData) {
     const city = document.querySelector("#city");
+    const admin1 = document.querySelector("#admin1");
     const country = document.querySelector("#country");
     const temperature = document.querySelector("#current-temperature");
     const feelsLike = document.querySelector("#feels-like").children[0];
@@ -134,8 +139,8 @@ class DomEditor {
     const distanceSuffix = this.getDistanceSuffix();
     // update content
     city.textContent = mainData.city;
-    country.textContent =
-      mainData.country === "United States" ? mainData.state : mainData.country;
+    admin1.textContent = mainData.state === undefined ? "" : mainData.state;
+    country.textContent = mainData.country;
     temperature.textContent =
       Math.round(mainData["temperature" + temperatureSuffix]) + "°";
     feelsLike.textContent =
@@ -208,7 +213,7 @@ class DomEditor {
       const maxTemp = card.children[1].children[0];
       const minTemp = card.children[1].children[1];
       const condition = card.children[1].children[2];
-      const chanceOfRain = card.children[1].children[3];
+      const chanceOfRain = card.children[1].children[3].children[1];
       //get unit suffixes
       const temperatureSuffix = this.getTemperatureSuffix();
       //edit content
