@@ -1,5 +1,4 @@
 import { DateTime } from "luxon";
-// import { weatherCondition } from "./weatherCondition";
 
 class Parser {
   #currentData;
@@ -70,6 +69,7 @@ class Parser {
         converted: false,
         wind_miles: "mph",
         visibility_miles: "miles",
+        pressure_psi: "psi",
       },
     };
     localStorage.setItem("location", JSON.stringify(locationJson));
@@ -99,12 +99,14 @@ class Parser {
   convertMtoMiles(m) {
     return this.convertKmToMiles(m * 0.001);
   }
+  convertHpaToPsi(hpa) {
+    return hpa * 0.0145037738;
+  }
   //calculates imperial units manually to avoid api call
   calculateImperialUnits() {
     if (this.#currentData === undefined) return;
     //only calculate imperial units once
     if (!this.#currentData.units.converted) {
-      console.log("Converted to F the first time");
       //main data
       this.#currentData.main.temperature_f = this.convertCToF(
         this.#currentData.main.temperature
@@ -122,7 +124,10 @@ class Parser {
       this.#currentData.main.details.visibility_miles = this.convertMtoMiles(
         this.#currentData.main.details.visibility
       );
-      // pressure????????????????????????????????????????
+      // pressure
+      this.#currentData.main.details.pressure_psi = this.convertHpaToPsi(
+        this.#currentData.main.details.pressure
+      );
       //hourly data
       this.#currentData.hourly.temperatures_f =
         this.#currentData.hourly.temperatures.map((temp) =>

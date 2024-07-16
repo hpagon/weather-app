@@ -36,15 +36,11 @@ class DomHandler {
     document
       .querySelector("#refresh")
       .addEventListener("click", this.refreshClickEvent);
-    this.addDragEvents(
-      document.querySelector("#location-container p:nth-child(1)")
-    );
     this.addDragEvents(document.querySelector("#hourly-card .card-container"));
   }
   searchbarSubmitEvent() {
     let locationIndex = undefined;
     const location = new FormData(this.#searchbarForm).get("location");
-    console.log(location);
     if (location.length < 3) return;
     // set location index if submit event was triggered with search result selected
     if (document.activeElement.classList.value === "search-result") {

@@ -1,5 +1,4 @@
 import { apiHandler } from "./apiHandler.js";
-// import { domHandler } from "./domHandler.js";
 import { parser } from "./parser.js";
 import { domEditor } from "./domEditor.js";
 import "../style.css";
@@ -8,11 +7,8 @@ class App {
   #currentSearchResults;
   constructor() {
     domEditor.loadContent();
-    // if (localStorage.getItem("location") !== null) {
-    //   this.refreshWeather();
-    // }
-    if (localStorage.length !== 0) {
-      domEditor.updateWeather(JSON.parse(localStorage.getItem("data")));
+    if (localStorage.getItem("location") !== null) {
+      this.refreshWeather();
     }
   }
   async updateWeather(cityName, locationIndex) {
@@ -33,17 +29,13 @@ class App {
         //otherwise use selected location
         locationJson = this.#currentSearchResults[locationIndex];
       }
-      console.log(locationJson);
       let weatherJson = await apiHandler.fetchWeather(
         locationJson.latitude,
         locationJson.longitude
       );
-      console.log(weatherJson);
       data = parser.parseWeatherData(locationJson, weatherJson);
-      console.log(data);
       domEditor.updateWeather(data);
       domEditor.removeLoadingComponent();
-      // localStorage.setItem("data", JSON.stringify(data));
     } catch (e) {
       this.handleError(e);
       domEditor.removeLoadingComponent();
@@ -53,7 +45,6 @@ class App {
     try {
       domEditor.insertLoadingComponent();
       let locationJson = await apiHandler.fetchLocation(cityName);
-      console.log(locationJson);
       domEditor.updateSearchResults(locationJson.results);
       this.#currentSearchResults = locationJson.results;
       domEditor.removeLoadingComponent();
@@ -73,7 +64,6 @@ class App {
       let data = parser.parseWeatherData(location, weatherJson);
       domEditor.updateWeather(data);
       domEditor.removeLoadingComponent();
-      console.log("done");
     } catch (error) {
       this.handleError(error);
     }

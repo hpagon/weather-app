@@ -353,7 +353,7 @@
 #hourly-card .card-container {
   display: flex;
   overflow: auto;
-  scrollbar-width: none;
+  scrollbar-width: thin;
   cursor: grab;
   user-select: none;
   -webkit-user-drag: none;

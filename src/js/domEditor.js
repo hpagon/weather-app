@@ -19,7 +19,6 @@ class DomEditor {
     //calculate imperial data if data is set to imperial on load
     const toggleButton = document.querySelector("#unit-toggle");
     if (toggleButton.textContent === "Imperial (F°)") {
-      console.log("converted to imperial");
       parser.calculateImperialUnits();
     }
     if (data === undefined) return;
@@ -137,6 +136,7 @@ class DomEditor {
     //get suffixes to select correct units
     const temperatureSuffix = this.getTemperatureSuffix();
     const distanceSuffix = this.getDistanceSuffix();
+    const pressureSuffix = this.getPressureSuffix();
     // update content
     city.textContent = mainData.city;
     admin1.textContent = mainData.state === undefined ? "" : mainData.state;
@@ -162,7 +162,9 @@ class DomEditor {
     dewpoint.textContent =
       Math.round(mainData.details["dewPoint" + temperatureSuffix]) + "°";
     pressure.textContent =
-      Math.round(mainData.details.pressure) + " " + data.units.pressure;
+      Math.round(mainData.details["pressure" + pressureSuffix]) +
+      " " +
+      data.units["pressure" + pressureSuffix];
     uvIndex.textContent = mainData.details.uvIndex;
     visibility.textContent =
       Math.round(mainData.details["visibility" + distanceSuffix]) +
@@ -247,8 +249,6 @@ class DomEditor {
     }
     for (let i = 0; i < 10; i++) {
       const resultContainer = resultsContainer.children[i + 1];
-      // console.log("results container: ", resultsContainer);
-      // console.log("result container: ", resultContainer);
       const city = resultContainer.children[0].children[0];
       const admin1 = resultContainer.children[0].children[1];
       const country = resultContainer.children[0].children[2];
@@ -297,11 +297,9 @@ class DomEditor {
   toggleUnits() {
     const toggleButton = document.querySelector("#unit-toggle");
     if (toggleButton.textContent === "Metric (C°)") {
-      console.log("converted to imperial");
       parser.calculateImperialUnits();
       toggleButton.textContent = "Imperial (F°)";
     } else {
-      console.log("converted to metric");
       toggleButton.textContent = "Metric (C°)";
     }
     this.updateWeather(parser.getCurrentData());
@@ -315,6 +313,11 @@ class DomEditor {
     const toggleButton = document.querySelector("#unit-toggle");
     if (toggleButton.textContent === "Metric (C°)") return "";
     return "_miles";
+  }
+  getPressureSuffix() {
+    const toggleButton = document.querySelector("#unit-toggle");
+    if (toggleButton.textContent === "Metric (C°)") return "";
+    return "_psi";
   }
   showStartOrWeatherPage() {
     const container = document.querySelector("#container");
