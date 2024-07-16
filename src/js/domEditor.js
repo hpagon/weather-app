@@ -183,6 +183,8 @@ class DomEditor {
       const chanceOfRain = card.children[3].children[1];
       //get unit suffixes
       const temperatureSuffix = this.getTemperatureSuffix();
+      //set attributes
+      condition.setAttribute("draggable", "false");
       //edit content
       time.textContent = parser.convertMilitaryTimeHour(
         (data.localHour + i) % 24

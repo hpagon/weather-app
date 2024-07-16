@@ -36,6 +36,10 @@ class DomHandler {
     document
       .querySelector("#refresh")
       .addEventListener("click", this.refreshClickEvent);
+    this.addDragEvents(
+      document.querySelector("#location-container p:nth-child(1)")
+    );
+    this.addDragEvents(document.querySelector("#hourly-card .card-container"));
   }
   searchbarSubmitEvent() {
     let locationIndex = undefined;
@@ -131,6 +135,43 @@ class DomHandler {
   }
   refreshClickEvent() {
     app.refreshWeather();
+  }
+  addDragEvents(element) {
+    element.addEventListener("mousemove", (e) => {
+      this.move(e, element);
+    });
+    element.addEventListener("mousedown", (e) => {
+      this.startDragging(e, element);
+    });
+    element.addEventListener("mouseup", () => {
+      this.stopDragging();
+    });
+    element.addEventListener("mouseleave", () => {
+      this.stopDragging();
+    });
+  }
+  #mouseDown = false;
+  #startX;
+  #scrollLeft;
+
+  startDragging(e, slider) {
+    this.#mouseDown = true;
+    this.#startX = e.pageX - slider.offsetLeft;
+    this.#scrollLeft = slider.scrollLeft;
+  }
+
+  stopDragging() {
+    this.#mouseDown = false;
+  }
+
+  move(e, slider) {
+    e.preventDefault();
+    if (!this.#mouseDown) {
+      return;
+    }
+    const x = e.pageX - slider.offsetLeft;
+    const scroll = x - this.#startX;
+    slider.scrollLeft = this.#scrollLeft - scroll;
   }
 }
 
