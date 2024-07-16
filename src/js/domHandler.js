@@ -76,6 +76,7 @@ class DomHandler {
   });
   shiftTabSearchResult(e) {
     if (e.key === "ArrowUp") {
+      e.preventDefault();
       const currentActive = document.activeElement;
       const tabIndex = currentActive.getAttribute("tabindex");
       const nextActive = document.querySelector(
@@ -88,6 +89,7 @@ class DomHandler {
   }
   tabSearchResult(e) {
     if (e.key === "ArrowDown") {
+      e.preventDefault();
       const currentActive = document.activeElement;
       const tabIndex = currentActive.getAttribute("tabindex");
       const nextActive = document.querySelector(
